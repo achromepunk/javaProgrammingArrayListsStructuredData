@@ -60,6 +60,7 @@ public class TestCaesarCipherTwo {
     }
     //breakCaesarCipher
     public String breakCaesarCipher(String input){
+        
         //we get freq of even pos string & odd pos string
         int[] freqs1 = countLetters(halfOfString(input, 0));
         int[] freqs2 = countLetters(halfOfString(input, 1));
@@ -81,6 +82,8 @@ public class TestCaesarCipherTwo {
         else{
             key2 = freq2 - 4;
         }
+        
+        System.out.println((26 - key1)+","+(26 - key2));
         //we invoke a new caesarcipherTwo object with the correct keys
         CaesarCipherTwo cc_aux = new CaesarCipherTwo(key1, key2);
         String result = cc_aux.decrypt(input);

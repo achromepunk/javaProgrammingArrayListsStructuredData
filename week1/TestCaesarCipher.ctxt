@@ -8,4 +8,6 @@ comment3.params=input
 comment3.target=void\ breakCaesarCipher(java.lang.String)
 comment4.params=
 comment4.target=void\ simpleTest()
-numComments=5
+comment5.params=
+comment5.target=void\ mostCommonLength()
+numComments=6

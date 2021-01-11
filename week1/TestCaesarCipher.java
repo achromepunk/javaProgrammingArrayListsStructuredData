@@ -66,8 +66,21 @@ public class TestCaesarCipher {
         System.out.println(encrypted);
         System.out.println(cc.decrypt(encrypted));
         
+    }
+    
+    //for the exam only purpose
+    public void mostCommonLength(){
+        FileResource fr = new FileResource();
+        int[] freqs = new int[20];
         
-                       
+        for(String w: fr.words()){
+            int length = w.length();
+            freqs[length] += 1;
+        }
+            
+        for(int i = 0; i < freqs.length; i++){
+            System.out.println(i + "\t" + freqs[i]);
+        }
     
     }
 }

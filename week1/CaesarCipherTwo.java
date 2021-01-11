@@ -6,6 +6,7 @@
  * @version (a version number or a date)
  */
 
+import java.io.File; 
 
 public class CaesarCipherTwo {
 
@@ -25,6 +26,7 @@ public class CaesarCipherTwo {
     }
     
     public String encrypt(String input){
+        input = input.toUpperCase();
         StringBuilder sb = new StringBuilder(input);
         
         for(int i = 0; i < input.length(); i++){
@@ -42,6 +44,7 @@ public class CaesarCipherTwo {
                 }
             }
         }
+        //System.out.println(sb.toString());
         return sb.toString();
     }
     
@@ -50,8 +53,24 @@ public class CaesarCipherTwo {
         
         String result = cc.encrypt(input);
         
+        System.out.println(result);
         return result;
     }   
+    //for exam purposes only
     
+    public void eyeBalling(String input){
+        input = input.toUpperCase();
+        File f = new File("preguntaExamen.txt");
+        for(int i = 0; i < 26; i +=1){
+            for(int j = 0; j < 26; j +=1){
+                CaesarCipherTwo ccc = new CaesarCipherTwo(i,j);
+                //System.out.print("** "+i+" , " + j + "**");
+                System.out.print(ccc.encrypt(input)+ "\t");
+            }
+            System.out.println("");
+        
+        }
+    
+    }
     
 }

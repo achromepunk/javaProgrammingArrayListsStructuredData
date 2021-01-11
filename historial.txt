@@ -1,3 +1,7 @@
 10 de enero
 java 	100	100	100	25
 python 	25	25	
+
+11 de enero
+java	25	25	100	25
+python

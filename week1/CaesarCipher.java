@@ -18,6 +18,7 @@ public class CaesarCipher {
     }
     
     public String encrypt(String input){
+        input = input.toUpperCase();
         StringBuilder sb = new StringBuilder(input);
         
         for(int i = 0; i < input.length(); i++){
@@ -27,7 +28,7 @@ public class CaesarCipher {
             }
             
         }
-        
+        //System.out.println(sb.toString());
         return sb.toString();
     }
 
