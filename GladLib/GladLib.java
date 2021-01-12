@@ -12,14 +12,19 @@ public class GladLib {
     private ArrayList<String> fruitList;
     private ArrayList<String> verbList;
     
+    
+    //used words
+    private ArrayList<String> usedList;
+    
     private Random myRandom;
     
     private static String dataSourceURL = "http://dukelearntoprogram.com/course3/data";
-    private static String dataSourceDirectory = "data";
+    private static String dataSourceDirectory = "datalong";
     
     public GladLib(){
         initializeFromSource(dataSourceDirectory);
         myRandom = new Random();
+        
     }
     
     public GladLib(String source){
@@ -37,6 +42,9 @@ public class GladLib {
         timeList = readIt(source+"/timeframe.txt");
         fruitList = readIt(source+"/fruit.txt");
         verbList = readIt(source+"/verb.txt");
+        
+        usedList = new ArrayList<String>();
+        
     }
     
     private String randomFrom(ArrayList<String> source){
@@ -87,6 +95,19 @@ public class GladLib {
         String prefix = w.substring(0,first);
         String suffix = w.substring(last+1);
         String sub = getSubstitute(w.substring(first+1,last));
+        
+        //add word to the ArrayList of used words && prevent usage again
+        while(usedList.contains(sub)){
+            sub = getSubstitute(w.substring(first+1,last));
+        }
+        
+        
+        if(!usedList.contains(sub)){
+            usedList.add(sub);
+        }
+        
+        
+        
         return prefix+sub+suffix;
     }
     
@@ -140,6 +161,8 @@ public class GladLib {
         System.out.println("\n");
         String story = fromTemplate("data/madtemplate2.txt");
         printOut(story, 60);
+        
+       
     }
     
 
