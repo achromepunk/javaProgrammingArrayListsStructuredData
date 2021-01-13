@@ -14,6 +14,8 @@ public class GladLibMap {
    
     //used words
     private ArrayList<String> usedList;
+    //totalWordsConsidered quizz 
+    private ArrayList<String> categoriesUsed;
     
     private Random myRandom;
     
@@ -56,6 +58,8 @@ public class GladLibMap {
         }
         
         usedList = new ArrayList<String>();
+        //categoriesUsed quizz
+        categoriesUsed = new ArrayList<String>();
         
     }
     
@@ -72,9 +76,13 @@ public class GladLibMap {
         }
         
         // infinite loop System.out.println(label);
-        label = label + "List";
-        if(myMap.containsKey(label)){
-            return randomFrom(myMap.get(label));
+        String label2 = label + "List";
+        if(myMap.containsKey(label2)){
+            if(!categoriesUsed.contains(label)){
+                categoriesUsed.add(label);
+            }
+            
+            return randomFrom(myMap.get(label2));
         }
         else{
             return "**UNKNOWN**";
@@ -154,11 +162,35 @@ public class GladLibMap {
         return list;
     }
     
+    private void totalWordsInMap(){
+        int sum = 0;
+        
+        for(String s: myMap.keySet()){
+            sum += myMap.get(s).size();
+        }
+        
+        System.out.println("\ntotal words in ArrayLists: " + sum);
+        
+    }
+    
+    private void totalWordsConsidered(){
+        int sum = 0;
+        System.out.println(categoriesUsed);
+        for(String w: categoriesUsed){
+            sum += myMap.get(w+"List").size();
+        }
+        System.out.println("\nThe total words in the lists used are " + sum);
+    }
+    
+    
     public void makeStory(){
         System.out.println("\n");
         String story = fromTemplate("data/madtemplate2.txt");
         printOut(story, 60);
-        
-       
+        totalWordsInMap();
+        totalWordsConsidered();
     }
+    
+    
+    
 }
