@@ -9,17 +9,9 @@ import edu.duke.*;
 import java.util.*;
 
 public class GladLibMap {
-    private ArrayList<String> adjectiveList;
-    private ArrayList<String> nounList;
-    private ArrayList<String> colorList;
-    private ArrayList<String> countryList;
-    private ArrayList<String> nameList;
-    private ArrayList<String> animalList;
-    private ArrayList<String> timeList;
-    private ArrayList<String> fruitList;
-    private ArrayList<String> verbList;
     
-    
+    private HashMap<String, ArrayList<String>> myMap;
+   
     //used words
     private ArrayList<String> usedList;
     
@@ -29,26 +21,39 @@ public class GladLibMap {
     private static String dataSourceDirectory = "datalong";
     
     public GladLibMap(){
+        myMap = new HashMap<String, ArrayList<String>>();
         initializeFromSource(dataSourceDirectory);
         myRandom = new Random();
         
     }
     
     public GladLibMap(String source){
+        myMap = new HashMap<String, ArrayList<String>>();
         initializeFromSource(source);
         myRandom = new Random();
     }
     
     private void initializeFromSource(String source) {
-        adjectiveList= readIt(source+"/adjective.txt"); 
-        nounList = readIt(source+"/noun.txt");
-        colorList = readIt(source+"/color.txt");
-        countryList = readIt(source+"/country.txt");
-        nameList = readIt(source+"/name.txt");      
-        animalList = readIt(source+"/animal.txt");
-        timeList = readIt(source+"/timeframe.txt");
-        fruitList = readIt(source+"/fruit.txt");
-        verbList = readIt(source+"/verb.txt");
+        
+        // I need to change TimeList to TimeframeList
+        String[] categories = {"adjectiveList", "nounList"
+            , "colorList", "countryList", "nameList" 
+            , "animalList" , "timeframeList", "fruitList"
+            , "verbList" };
+            
+        String[] fileNames = {"adjective.txt", "noun.txt"
+            , "color.txt", "country.txt", "name.txt" 
+            , "animal.txt" , "timeframe.txt", "fruit.txt"
+            , "verb.txt"};
+            
+        for (int i = 0; i < categories.length; i += 1){
+            myMap.put(categories[i], readIt(source + "/" + fileNames[i]));
+        }
+        
+        for(String s: myMap.keySet()){
+            System.out.print(s + "\t");
+            System.out.println(myMap.get(s));
+        }
         
         usedList = new ArrayList<String>();
         
@@ -56,41 +61,24 @@ public class GladLibMap {
     
     private String randomFrom(ArrayList<String> source){
         int index = myRandom.nextInt(source.size());
+        //System.out.println(source.get(index));
         return source.get(index);
     }
     
     private String getSubstitute(String label) {
-        if (label.equals("country")) {
-            return randomFrom(countryList);
-        }
-        if (label.equals("color")){
-            return randomFrom(colorList);
-        }
-        if (label.equals("noun")){
-            return randomFrom(nounList);
-        }
-        if (label.equals("name")){
-            return randomFrom(nameList);
-        }
-        if (label.equals("adjective")){
-            return randomFrom(adjectiveList);
-        }
-        if (label.equals("animal")){
-            return randomFrom(animalList);
-        }
-        if (label.equals("timeframe")){
-           return randomFrom(timeList);
-        }
-        if (label.equals("verb")){
-            return randomFrom(verbList);
-        }
-        if (label.equals("fruit")){
-            return randomFrom(fruitList);
-        }
-        if (label.equals("number")){
+        //check first if label is number
+        if(label.equals("number")){
             return ""+myRandom.nextInt(50)+5;
         }
-        return "**UNKNOWN**";
+        
+        // infinite loop System.out.println(label);
+        label = label + "List";
+        if(myMap.containsKey(label)){
+            return randomFrom(myMap.get(label));
+        }
+        else{
+            return "**UNKNOWN**";
+        }
     }
     
     private String processWord(String w){
@@ -106,11 +94,13 @@ public class GladLibMap {
         //add word to the ArrayList of used words && prevent usage again
         while(usedList.contains(sub)){
             sub = getSubstitute(w.substring(first+1,last));
+            //System.out.println("label " + w + "already " + sub);
         }
         
         
         if(!usedList.contains(sub)){
             usedList.add(sub);
+            //System.out.println("label " + w + "added " + sub);
         }
         
         
