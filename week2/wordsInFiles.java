@@ -80,8 +80,21 @@ public class wordsInFiles {
     //only for testing purposes
     public void test(){
         words.clear();
+        System.out.println("cleared");
         buildWordFileMap();
-        printFilesIn("cats");
+        
+        System.out.println("created");
+        
+        ArrayList<String> wordsInNFiles = wordsInNumFiles(4);
+        for(String s: wordsInNFiles){
+            //System.out.println(s);
+        }
+        
+        
+        //System.out.println(wordsInNFiles.size());
+        
+        System.out.println("*******");
+        printFilesIn("tree");
         
         
         

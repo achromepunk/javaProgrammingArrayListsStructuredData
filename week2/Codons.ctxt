@@ -4,4 +4,6 @@ comment1.params=
 comment1.target=Codons()
 comment2.params=start\ dna
 comment2.target=java.util.HashMap\ buildCodonMap(int,\ java.lang.String)
-numComments=3
+comment3.params=
+comment3.target=void\ testCodonMap()
+numComments=4
