@@ -54,7 +54,7 @@ public class CharactersInPlay {
     
     public void tester(){
         int num1 = 10;
-        int num2 = 15;
+        int num2 = 1500;
         
         findAllCharacters();
         charactersWithNumParts(num1 ,  num2);

@@ -91,7 +91,7 @@ public class wordsInFiles {
         }
         
         
-        //System.out.println(wordsInNFiles.size());
+        System.out.println(wordsInNFiles.size());
         
         System.out.println("*******");
         printFilesIn("tree");
