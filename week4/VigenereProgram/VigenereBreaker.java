@@ -43,21 +43,41 @@ public class VigenereBreaker {
         return count;
     }
     
+    public String breakForLanguage(String encrypted, HashSet<String> dictionary){
+        char mostCommon = 'e';
+        String result = "";
+        int best = 0;
+        
+        for(int i = 1; i < 101; i++){
+            int key[] = tryKeyLength(encrypted, i, mostCommon);
+            VigenereCipher vb = new VigenereCipher(key);
+            String decrypted = vb.decrypt(encrypted);
+            int count = countWords(decrypted, dictionary);
+            if(best < count){
+                best = count;
+                result = decrypted;
+            }
+        }
+        
+        
+        
+        return result;
+    }
+    
     public void breakVigenere () {
         //Select the data
+        System.out.println("select data");
         FileResource fr = new FileResource();
-        String encrypt = fr.asString();
+        String encrypted = fr.asString();
         
         //Select the dictionary
+        System.out.println("select dictionaries");
         FileResource di = new FileResource();
         HashSet<String> dictionary = readDictionary(di);
-        System.out.println(countWords(encrypt, dictionary));
+        String decrypted = breakForLanguage(encrypted, dictionary);
+        System.out.println(decrypted);
         
-        char mostCommon = 'e';
         
-        int[] key = tryKeyLength(encrypt, 5, mostCommon);
-        VigenereCipher vb = new VigenereCipher(key);
-        //System.out.println(vb.decrypt(encrypt));
     }
     
 }
