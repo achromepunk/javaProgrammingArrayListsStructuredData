@@ -23,7 +23,7 @@ public class TestVigenereBreaker {
         FileResource fr = new FileResource();
         
         String encrypted = fr.asString();
-        String key = "flute";
+        String key = "flut";
         
         int[] result = vb.tryKeyLength(encrypted, key.length(), 'e');
         
@@ -35,6 +35,17 @@ public class TestVigenereBreaker {
     public void testBreakVigenere(){
         VigenereBreaker vb = new VigenereBreaker();
         vb.breakVigenere();
+    }
+    
+    public void testBreakVigenereNoKeyLength(){
+        VigenereBreaker vb = new VigenereBreaker();
+        vb.breakVigenere2();
+    }
+    
+    public void testMostCommonChar(){
+        VigenereBreaker vb = new VigenereBreaker();
+        FileResource fr = new FileResource();
+        System.out.println(vb.mostCommonCharIn(vb.readDictionary(fr)));
     }
     
 }
