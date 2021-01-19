@@ -29,20 +29,35 @@ public class VigenereBreaker {
         for(String l: fr.lines()){
             dict.add(l.toLowerCase());
         }
-        
         return dict;
     }
     
+    public int countWords(String message, HashSet<String> dictionary){
+        String[] list = message.split("\\W+");
+        int count = 0;
+        for(String w: list){
+            if(dictionary.contains(w.toLowerCase())){
+                count += 1;
+            }
+        }
+        return count;
+    }
+    
     public void breakVigenere () {
-        //WRITE YOUR CODE HERE
+        //Select the data
         FileResource fr = new FileResource();
         String encrypt = fr.asString();
+        
+        //Select the dictionary
+        FileResource di = new FileResource();
+        HashSet<String> dictionary = readDictionary(di);
+        System.out.println(countWords(encrypt, dictionary));
         
         char mostCommon = 'e';
         
         int[] key = tryKeyLength(encrypt, 5, mostCommon);
         VigenereCipher vb = new VigenereCipher(key);
-        System.out.println(vb.decrypt(encrypt));
+        //System.out.println(vb.decrypt(encrypt));
     }
     
 }
