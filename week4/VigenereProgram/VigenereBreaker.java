@@ -28,10 +28,12 @@ public class VigenereBreaker {
         //WRITE YOUR CODE HERE
         FileResource fr = new FileResource();
         String encrypt = fr.asString();
-        int[] key = tryKeyLength(encrypt, 5, 'e');
-        for(int i: key){
-            System.out.println(i);
-        }
+        
+        char mostCommon = 'e';
+        
+        int[] key = tryKeyLength(encrypt, 5, mostCommon);
+        VigenereCipher vb = new VigenereCipher(key);
+        System.out.println(vb.decrypt(encrypt));
     }
     
 }
