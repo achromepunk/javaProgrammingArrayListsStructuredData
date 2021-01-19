@@ -64,6 +64,31 @@ public class VigenereBreaker {
         return result;
     }
     
+    public char mostCommonCharIn(HashSet<String> dictionary){
+        String alphabet = "abcdefghijklmnopqrstuvwxyz";
+        int[] counts = new int[alphabet.length()];
+        
+        for(String w: dictionary){
+            for(int i = 0; i < w.length(); i ++){
+                int index = alphabet.indexOf(w.charAt(i));
+                if(index != -1){
+                    counts[index] = counts[index] + 1; 
+                }
+            }
+        }
+        
+        int max = 0;
+        int pos = 0;
+        for(int i = 0; i < counts.length; i++){
+            if(max < counts[i]){
+                max = counts[i];
+                pos = i;
+            }
+        }
+    
+        return alphabet.charAt(pos);
+    }
+    
     public void breakVigenere () {
         //Select the data
         System.out.println("select data");
@@ -74,6 +99,7 @@ public class VigenereBreaker {
         System.out.println("select dictionaries");
         FileResource di = new FileResource();
         HashSet<String> dictionary = readDictionary(di);
+        
         String decrypted = breakForLanguage(encrypted, dictionary);
         System.out.println(decrypted);
         
