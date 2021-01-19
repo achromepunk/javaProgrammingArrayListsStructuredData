@@ -24,6 +24,15 @@ public class VigenereBreaker {
         return key;
     }
 
+    public HashSet<String> readDictionary(FileResource fr){
+        HashSet<String> dict = new HashSet<String>();
+        for(String l: fr.lines()){
+            dict.add(l.toLowerCase());
+        }
+        
+        return dict;
+    }
+    
     public void breakVigenere () {
         //WRITE YOUR CODE HERE
         FileResource fr = new FileResource();
