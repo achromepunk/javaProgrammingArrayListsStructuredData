@@ -15,11 +15,23 @@ public class VigenereBreaker {
     public int[] tryKeyLength(String encrypted, int klength, char mostCommon) {
         int[] key = new int[klength];
         //WRITE YOUR CODE HERE
+        for(int i = 0; i < key.length; i++){
+            CaesarCracker cc = new CaesarCracker(mostCommon);
+            key[i] = cc.getKey(sliceString(encrypted, i, klength));
+        }
+        
+        
         return key;
     }
 
     public void breakVigenere () {
         //WRITE YOUR CODE HERE
+        FileResource fr = new FileResource();
+        String encrypt = fr.asString();
+        int[] key = tryKeyLength(encrypt, 5, 'e');
+        for(int i: key){
+            System.out.println(i);
+        }
     }
     
 }
