@@ -1,5 +1,6 @@
 import java.util.*;
 import edu.duke.*;
+import java.io.File;
 
 public class VigenereBreaker {
     public String sliceString(String message, int whichSlice, int totalSlices) {
@@ -44,7 +45,7 @@ public class VigenereBreaker {
     }
     
     public String breakForLanguage(String encrypted, HashSet<String> dictionary){
-        char mostCommon = 'e';
+        char mostCommon = mostCommonCharIn(dictionary);
         String result = "";
         int best = 0;
         
@@ -58,8 +59,6 @@ public class VigenereBreaker {
                 result = decrypted;
             }
         }
-        
-        
         
         return result;
     }
@@ -89,7 +88,46 @@ public class VigenereBreaker {
         return alphabet.charAt(pos);
     }
     
+    public String breakForAllLangs(String encrypted, HashMap<String, HashSet<String>> languages){
+        String bestLang = "";
+        int best = 0;
+        
+        for(String l: languages.keySet()){
+            
+            String decrypted = breakForLanguage(encrypted, languages.get(l));
+            int realWords = countWords(decrypted, languages.get(l));
+            if(best < realWords){
+                best = realWords;
+                bestLang = decrypted;
+            }
+            
+        }
+        
+        return bestLang;
+    }
+    
     public void breakVigenere () {
+        //Select the data
+        System.out.println("select data");
+        FileResource fr = new FileResource();
+        String encrypted = fr.asString();
+        
+        //Select the dictionares
+        HashMap<String, HashSet<String>> languages = new HashMap<String, HashSet<String>>();
+        
+        System.out.println("select dictionaries");
+        DirectoryResource dr = new DirectoryResource();
+        for(File f: dr.selectedFiles()){
+            FileResource dic = new FileResource(f);
+            languages.put(f.getName(), readDictionary(dic));
+        }
+        
+        //breakForAllLangs
+        System.out.println(breakForAllLangs(encrypted, languages));
+        
+    }
+    
+    public void breakVigenere_old () {
         //Select the data
         System.out.println("select data");
         FileResource fr = new FileResource();
@@ -101,9 +139,7 @@ public class VigenereBreaker {
         HashSet<String> dictionary = readDictionary(di);
         
         String decrypted = breakForLanguage(encrypted, dictionary);
-        System.out.println(decrypted);
-        
-        
+        //System.out.println(decrypted);
+        System.out.println(countWords(decrypted, dictionary));
     }
-    
 }
